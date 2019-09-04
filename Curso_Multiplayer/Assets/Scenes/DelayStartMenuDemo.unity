@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayStartButton: {fileID: 1853988115}
   delayCancelButton: {fileID: 1212473939}
-  RoomSize: 4
+  RoomSize: 2
 --- !u!4 &1508584125
 Transform:
   m_ObjectHideFlags: 0
