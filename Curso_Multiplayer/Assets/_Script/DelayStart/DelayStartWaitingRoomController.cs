@@ -9,7 +9,7 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     private PhotonView myPhotonView;
 
     [SerializeField]
-    private int multiplayerSceneIndex;
+    private string multiplayerSceneIndex;
     [SerializeField]
     private int menuSceneIndex;
 

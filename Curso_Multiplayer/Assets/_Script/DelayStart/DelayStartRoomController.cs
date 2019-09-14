@@ -6,7 +6,7 @@ public class DelayStartRoomController : MonoBehaviourPunCallbacks
 {
 
     [SerializeField]
-    private int waitingRoomSceneIndex;
+    private string waitingRoomSceneIndex;
 
     public override void OnEnable()
     {
