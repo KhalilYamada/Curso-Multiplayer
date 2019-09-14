@@ -6,7 +6,18 @@ public class DelayStartRoomController : MonoBehaviourPunCallbacks
 {
 
     [SerializeField]
-    private string waitingRoomSceneIndex;
+    private string waitingRoomSceneIndexA;
+    [SerializeField]
+    private string waitingRoomSceneIndexB;
+
+
+    private bool modo;
+
+    [SerializeField]
+    private GameObject botaoModo1;
+    [SerializeField]
+    private GameObject botaoModo2;
+
 
     public override void OnEnable()
     {
@@ -20,6 +31,29 @@ public class DelayStartRoomController : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        SceneManager.LoadScene(waitingRoomSceneIndex);
+        if(modo == false)
+        {
+            SceneManager.LoadScene(waitingRoomSceneIndexA);
+        }
+        else
+        {
+            SceneManager.LoadScene(waitingRoomSceneIndexB);
+        }
+    }
+
+    public void SwichMode()
+    {
+        if (modo == true)
+        {
+            modo = false;
+            botaoModo1.SetActive(true);
+            botaoModo2.SetActive(false);
+        }
+        else
+        {
+            modo = true;
+            botaoModo1.SetActive(false);
+            botaoModo2.SetActive(true);
+        }
     }
 }

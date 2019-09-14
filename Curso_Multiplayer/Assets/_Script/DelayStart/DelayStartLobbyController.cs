@@ -13,10 +13,16 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
     [SerializeField]
     private int RoomSize; //Utilizado para setar manualmente o numero de jogadores de uma sala
 
+    [SerializeField]
+    private GameObject botaoModo1;
+
+    bool modo;
+
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         delayStartButton.SetActive(true);
+        botaoModo1.SetActive(true);
     }
 
 
@@ -24,6 +30,7 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
     {
         delayStartButton.SetActive(false);
         delayCancelButton.SetActive(true);
+        //PhotonNetwork.JoinRoom();
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("Delay start");
     }
@@ -55,8 +62,5 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
         delayStartButton.SetActive(true);
         PhotonNetwork.LeaveRoom();
     }
-
-
-
 }
 
