@@ -1,6 +1,8 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class DelayStartLobbyController : MonoBehaviourPunCallbacks
 {
@@ -12,17 +14,14 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
     private GameObject delayCancelButton; //Botão utilizado para parar de procurar uma sala de jogo
     [SerializeField]
     private int RoomSize; //Utilizado para setar manualmente o numero de jogadores de uma sala
-
-    [SerializeField]
-    private GameObject botaoModo1;
-
-    bool modo;
+    
+    [HideInInspector]
+    public bool modo;    
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         delayStartButton.SetActive(true);
-        botaoModo1.SetActive(true);
     }
 
 
@@ -30,9 +29,15 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
     {
         delayStartButton.SetActive(false);
         delayCancelButton.SetActive(true);
-        //PhotonNetwork.JoinRoom();
         PhotonNetwork.JoinRandomRoom();
-        Debug.Log("Delay start");
+
+
+        //ExitGames.Client.Photon.Hashtable expectedCustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "map", modo } };
+
+
+        
+        //PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, (byte)RoomSize);
+        
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -46,8 +51,36 @@ public class DelayStartLobbyController : MonoBehaviourPunCallbacks
         Debug.Log("Creating room now");
         int randomRoomNumber = Random.Range(0, 10000);
         RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)RoomSize };
+        /*
+        RoomOptions roomOps = new RoomOptions();
+        roomOps.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+
+        roomOps.CustomRoomProperties.Add("map", modo);
+
+        roomOps.CustomRoomProperties["map"] = 1;
+        Debug.Log(roomOps.CustomRoomProperties["map"]);
+        //roomOps.CustomRoomProperties.SetValue("map", 3);
+        
+
+        roomOps.MaxPlayers = (byte)RoomSize;
+
+        */
+
+
+        //RoomOptions roomOptions = new RoomOptions();
+
+
+        //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "map", modo } };
+
+        //roomOptions.CustomRoomPropertiesForLobby = { "map", 1} ;
+
+
+        //roomOptions.CustomRoomProperties["map"] = modo;
+
+        //Debug.Log(roomOptions.CustomRoomProperties[2]);
+        //roomOptions.MaxPlayers = (byte)RoomSize;
         PhotonNetwork.CreateRoom("Room" + randomRoomNumber, roomOps);
-        Debug.Log(randomRoomNumber);
+        //Debug.Log(randomRoomNumber + " / " + modo);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

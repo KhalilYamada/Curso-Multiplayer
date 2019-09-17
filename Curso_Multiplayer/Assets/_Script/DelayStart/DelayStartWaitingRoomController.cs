@@ -9,7 +9,9 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     private PhotonView myPhotonView;
 
     [SerializeField]
-    private string multiplayerSceneIndex;
+    private string multiplayerSceneIndex1;
+    [SerializeField]
+    private string multiplayerSceneIndex2;
     [SerializeField]
     private int menuSceneIndex;
 
@@ -36,12 +38,31 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     [SerializeField]
     private float maxFullGameWaitTime;
 
+    [HideInInspector]
+    public bool modo;
+
+    [SerializeField]
+    private GameObject botaoModo1;
+    [SerializeField]
+    private GameObject botaoModo2;
+
     private void Start()
     {
         myPhotonView = GetComponent<PhotonView>();
         fullRoomTimer = maxFullGameWaitTime;
         notFullRoomTimer = maxWaitTime;
         timerToStartGame = maxWaitTime;
+
+        botaoModo2.SetActive(false);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            botaoModo1.SetActive(true);
+        }
+        else
+        {
+            botaoModo1.SetActive(false);
+        }
 
         PlayerCountUpdate();
     }
@@ -91,6 +112,19 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         PlayerCountUpdate();
+        if (PhotonNetwork.IsMasterClient == true)
+        {
+            if (modo == true)
+            {
+                botaoModo1.SetActive(true);
+                botaoModo2.SetActive(false);
+            }
+            else
+            {
+                botaoModo1.SetActive(false);
+                botaoModo2.SetActive(true);
+            }
+        }
     }
 
     private void Update()
@@ -138,12 +172,35 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
         PhotonNetwork.CurrentRoom.IsOpen = false;
-        PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+        if(modo == true)
+        {
+            PhotonNetwork.LoadLevel(multiplayerSceneIndex1);
+        }
+        else
+        {
+            PhotonNetwork.LoadLevel(multiplayerSceneIndex2);
+        }
     }
 
     public void DelayCancel()
     {
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene(menuSceneIndex);
+    }
+
+    public void SwichMode()
+    {
+        if (modo == true)
+        {
+            modo = false;
+            botaoModo1.SetActive(true);
+            botaoModo2.SetActive(false);
+        }
+        else
+        {
+            modo = true;
+            botaoModo1.SetActive(false);
+            botaoModo2.SetActive(true);
+        }
     }
 }

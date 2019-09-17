@@ -17,13 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DelayStart/DelayStartWaitingRoomDemo.unity
     guid: 22804310d7f945745a1158409d1fe5cb
-  - enabled: 1
-    path: Assets/Scenes/DelayStart/DelayStartWaitingRoomDemo2.unity
-    guid: e5c0838216f263e46b9b433a0aba8b2c
   - enabled: 0
     path: Assets/Scenes/CustomMatchmaking/CustomMatchmakingMenuDemo.unity
     guid: 9ff62fffc440ee147a1007cb52cb62d1
   - enabled: 1
     path: Assets/Scenes/MultiplayerSceneDemo.unity
     guid: 5d4483e498990af40abb5b66be239ba6
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerSceneDemo2.unity
+    guid: 3150aa6203af68940a76c8e6ecc80e81
   m_configObjects: {}
