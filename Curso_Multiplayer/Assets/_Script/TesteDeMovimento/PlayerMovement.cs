@@ -9,6 +9,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     public bool devTesting = false;
+        
+    public Player player { get; private set; }
 
     public PhotonView pView;
 
@@ -20,7 +22,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 	private float jumpPower;
 	[SerializeField]
 	private int gravity;
-	
+
+
+    private float coletavel;
 
 
 	private float gravityForce;
@@ -44,12 +48,12 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     void Update()
     {
 		if (!pView.IsMine) return;
+        CheckInput();
 
-		
-            CheckInput();
-        
-
-
+        if (coletavel >= 1)
+        {
+            gameObject.GetComponent<PhotonView>().RPC("TrocaSala", RpcTarget.MasterClient);
+        }
     }
 
 	
@@ -75,8 +79,33 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 	}
 
 
-	
-	private bool isGrounded()
+
+
+
+
+    [PunRPC]
+    void TrocaSala()
+    {
+        PhotonNetwork.LoadLevel("DelayStartMenuDemo");
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coletavel"))
+        {
+            if (pView.IsMine == true)
+            {
+                coletavel++;
+            }
+        }
+    }
+
+
+
+
+
+    private bool isGrounded()
 	{
 		RaycastHit hit;
 		if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1000))
@@ -108,11 +137,4 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 			return false;
 		}
 	}
-	
-
-
-
-    
-
-	
 }

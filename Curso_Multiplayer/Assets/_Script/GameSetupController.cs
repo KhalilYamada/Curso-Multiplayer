@@ -7,7 +7,7 @@ public class GameSetupController : MonoBehaviour
 
     void Start()
     {
-        CreatePlayer();      
+        CreatePlayer();
     }
 
     private void CreatePlayer()

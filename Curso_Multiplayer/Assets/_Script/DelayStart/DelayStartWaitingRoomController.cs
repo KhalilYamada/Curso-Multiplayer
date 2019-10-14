@@ -45,6 +45,8 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     private GameObject botaoModo1;
     [SerializeField]
     private GameObject botaoModo2;
+    [SerializeField]
+    private GameObject botaoStart;
 
     private void Start()
     {
@@ -58,10 +60,12 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             botaoModo1.SetActive(true);
+            botaoStart.SetActive(true);
         }
         else
         {
             botaoModo1.SetActive(false);
+            botaoStart.SetActive(false);
         }
 
         PlayerCountUpdate();
@@ -166,7 +170,7 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
         fullRoomTimer = maxFullGameWaitTime;
     }
 
-    void StartGame()
+    public void StartGame()
     {
         startingGame = true;
         if (!PhotonNetwork.IsMasterClient)
